@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seguridad y Safety Hospitalaria — Capacitación en vivo</title>
+<meta name="description" content="Programa de capacitación en vivo, 100% en español, para equipos de seguridad y safety en hospitales y centros de salud. Instructor con doble autoridad: hospital + fuerzas del orden en EE.UU.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0f1b30; --navy2:#17223a; --gold:#e0a526; --red:#c0392b; --red2:#9b2f22;
+    --cream:#f3efe8; --tan:#e7e0d2; --ink:#2c3a52;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Inter',sans-serif; background:var(--cream); color:var(--ink); -webkit-font-smoothing:antialiased;}
+  img{max-width:100%; display:block;}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1100px; margin:0 auto; padding:0 24px;}
+
+  /* stripes */
+  .stripes{height:8px; width:100%; background:repeating-linear-gradient(135deg, var(--red) 0 20px, var(--gold) 20px 40px);}
+
+  /* header */
+  header{background:var(--navy); color:#fff; padding:64px 0 56px;}
+  .badge{display:inline-block; border:1.5px solid var(--gold); color:var(--gold); font-weight:800; font-size:13px; letter-spacing:1px; padding:8px 16px; border-radius:30px; margin-bottom:20px;}
+  .eyebrow{color:var(--red); font-weight:800; font-size:14px; letter-spacing:1.5px; margin-bottom:10px;}
+  h1{font-size:clamp(32px,5vw,52px); font-weight:800; line-height:1.12; margin-bottom:18px;}
+  h1 .accent{color:var(--gold);}
+  .desc{color:#cdd6e3; font-size:clamp(16px,2vw,19px); line-height:1.6; max-width:720px; margin-bottom:28px;}
+  .cta-row{display:flex; gap:16px; flex-wrap:wrap;}
+  .btn{display:inline-block; padding:16px 28px; border-radius:8px; font-weight:800; font-size:16px;}
+  .btn-primary{background:var(--gold); color:#1a1208;}
+  .btn-primary:hover{filter:brightness(1.05);}
+  .btn-outline{border:1.5px solid #fff; color:#fff;}
+
+  /* cards section */
+  section{padding:56px 0;}
+  .cards{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  .card{background:#fff; border-left:5px solid var(--red); border-radius:6px; padding:24px 26px; box-shadow:0 1px 3px rgba(0,0,0,0.06);}
+  .card .label{color:var(--red); font-weight:800; font-size:13px; letter-spacing:1px; margin-bottom:8px;}
+  .card .value{color:var(--navy2); font-size:17px; font-weight:700; line-height:1.4;}
+
+  .pills{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:28px;}
+  .pill{background:var(--navy); border-radius:6px; padding:18px; text-align:center;}
+  .pill .num{color:var(--gold); font-weight:800; font-size:18px;}
+  .pill .lab{color:#cdd6e3; font-size:12.5px; margin-top:4px;}
+
+  /* columns */
+  .columns{display:grid; grid-template-columns:1fr 1fr; gap:48px; margin-top:12px;}
+  .col h3{color:var(--navy2); font-size:17px; font-weight:800; border-bottom:2px solid var(--navy2); padding-bottom:10px; margin-bottom:18px;}
+  .col ul{list-style:none;}
+  .col li{font-size:15.5px; line-height:1.5; margin-bottom:14px; display:flex; gap:9px;}
+  .col li::before{content:"▸"; color:var(--red); font-size:13px; margin-top:3px;}
+
+  /* offer */
+  .offer{background:var(--tan); border-radius:8px; padding:26px 30px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-top:12px;}
+  .offer .lead{color:#5a4f3d; font-size:13px; font-weight:700; letter-spacing:0.5px;}
+  .offer .title{color:var(--navy2); font-size:24px; font-weight:800; margin-top:6px;}
+  .offer .tag{background:var(--red); color:#fff; font-weight:800; font-size:14px; padding:12px 22px; border-radius:30px; white-space:nowrap;}
+
+  /* cta bar */
+  .ctabar{background:linear-gradient(90deg,var(--red2),var(--red)); padding:48px 0; color:#fff;}
+  .ctabar .inner{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px;}
+  .ctabar h2{font-size:clamp(22px,3vw,30px); font-weight:800; line-height:1.25;}
+  .ctabar .sub{color:#f3d9d4; font-size:15px; font-weight:600; margin-top:8px;}
+
+  footer{background:var(--navy); text-align:center; padding:22px; color:#8694a8; font-size:12.5px; letter-spacing:0.4px;}
+
+  @media (max-width:760px){
+    .cards, .pills, .columns{grid-template-columns:1fr;}
+    header{padding:48px 0 40px;}
+    section{padding:40px 0;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="badge">★ CAPACITACIÓN EN VIVO · 100% EN ESPAÑOL</div>
+    <div class="eyebrow">PROGRAMA DE CAPACITACIÓN PARA HOSPITALES</div>
+    <h1>Seguridad y <span class="accent">Safety</span> Hospitalaria</h1>
+    <p class="desc">Un programa en vivo, dos veces por semana, para capacitar al personal de seguridad, enfermería y administración de su centro de salud — con protocolos reales usados en hospitales de Estados Unidos.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://wa.me/12013172879?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20programa%20Seguridad%20y%20Safety%20Hospitalaria" target="_blank" rel="noopener">Agendar llamada por WhatsApp</a>
+      <a class="btn btn-outline" href="#programa">Ver el programa</a>
+    </div>
+  </div>
+</header>
+<div class="stripes"></div>
+
+<section id="programa">
+  <div class="wrap">
+    <div class="cards">
+      <div class="card">
+        <div class="label">INSTRUCTOR</div>
+        <div class="value">Israel Peña — Gerente de Seguridad Física y Safety, sistema hospitalario en EE.UU.</div>
+      </div>
+      <div class="card">
+        <div class="label">AUTORIDAD</div>
+        <div class="value">Oficial Adjunto del Sheriff (Sheriff's Deputy), Estado de Nueva Jersey</div>
+      </div>
+    </div>
+
+    <div class="pills">
+      <div class="pill"><div class="num">8</div><div class="lab">semanas</div></div>
+      <div class="pill"><div class="num">2x</div><div class="lab">clases en vivo/semana</div></div>
+      <div class="pill"><div class="num">Skool</div><div class="lab">comunidad privada</div></div>
+      <div class="pill"><div class="num">✓</div><div class="lab">certificado</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:#fff; padding-top:0;">
+  <div class="wrap">
+    <div class="columns">
+      <div class="col">
+        <h3>LO QUE APRENDERÁ SU EQUIPO</h3>
+        <ul>
+          <li>Fundamentos y límites legales de la seguridad hospitalaria</li>
+          <li>Evaluación de riesgos y vulnerabilidades del centro</li>
+          <li>Control de acceso y seguridad perimetral</li>
+          <li>Prevención de violencia laboral y desescalada</li>
+          <li>Códigos de emergencia y respuesta crítica</li>
+          <li>Seguridad infantil y de recién nacidos (UCIN)</li>
+          <li>Coordinación con fuerzas del orden y salud conductual</li>
+          <li>Cultura de safety y reporte de incidentes</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>POR QUÉ ESTE PROGRAMA</h3>
+        <ul>
+          <li>Enseñado en vivo, no es un curso grabado pasivo</li>
+          <li>Instructor con doble autoridad: hospital + fuerzas del orden</li>
+          <li>Protocolos reales, probados en hospitales acreditados de EE.UU.</li>
+          <li>Casos prácticos, no solo teoría</li>
+          <li>Grabaciones disponibles si no puede asistir en vivo</li>
+          <li>Comunidad privada con acceso directo al instructor</li>
+          <li>Escalable: desde una clínica hasta una red hospitalaria</li>
+          <li>Certificado de finalización para cada participante</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="offer">
+      <div>
+        <div class="lead">OFERTA DE LANZAMIENTO — REPÚBLICA DOMINICANA</div>
+        <div class="title">Precio especial por cupo fundador</div>
+      </div>
+      <div class="tag">CUPOS LIMITADOS</div>
+    </div>
+  </div>
+</section>
+
+<div class="ctabar">
+  <div class="wrap inner">
+    <div>
+      <h2>Agende una llamada de 15 minutos</h2>
+      <div class="sub">Conozca el programa completo, sin costo ni compromiso</div>
+    </div>
+    <a class="btn btn-primary" href="https://wa.me/12013172879?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20programa%20Seguridad%20y%20Safety%20Hospitalaria" target="_blank" rel="noopener">WhatsApp: (201) 317-2879</a>
+  </div>
+</div>
+
+<footer>SEGURIDAD Y SAFETY HOSPITALARIA · CAPACITACIÓN EN VIVO PARA CENTROS DE SALUD EN LATINOAMÉRICA</footer>
+
+</body>
+</html>
