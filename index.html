@@ -67,6 +67,14 @@
 
   footer{background:var(--navy); text-align:center; padding:22px; color:#8694a8; font-size:12.5px; letter-spacing:0.4px;}
 
+  /* video section */
+  .video-wrap{max-width:720px; margin:0 auto;}
+  .video-placeholder{background:var(--navy); border-radius:12px; aspect-ratio:16/9; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#cdd6e3; text-align:center; padding:32px; border:2px dashed var(--gold);}
+  .video-placeholder .play-icon{width:64px; height:64px; border-radius:50%; background:var(--gold); display:flex; align-items:center; justify-content:center; margin-bottom:16px; font-size:24px; color:#1a1208;}
+  .video-placeholder .vtitle{font-weight:800; font-size:16px; color:#fff; margin-bottom:6px;}
+  .video-placeholder .vsub{font-size:13.5px; max-width:400px;}
+  .video-cta{text-align:center; margin-top:24px;}
+
   @media (max-width:760px){
     .cards, .pills, .columns{grid-template-columns:1fr;}
     header{padding:48px 0 40px;}
@@ -83,7 +91,7 @@
     <h1>Seguridad y <span class="accent">Safety</span> Hospitalaria</h1>
     <p class="desc">Un programa en vivo, dos veces por semana, para capacitar al personal de seguridad, enfermería y administración de su centro de salud — con protocolos reales usados en hospitales de Estados Unidos.</p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="https://wa.me/12013172879?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20programa%20Seguridad%20y%20Safety%20Hospitalaria" target="_blank" rel="noopener">Agendar llamada por WhatsApp</a>
+      <a class="btn btn-primary" href="https://calendly.com/yumerysjimenez/30min" target="_blank" rel="noopener">Agendar llamada (15 min)</a>
       <a class="btn btn-outline" href="#programa">Ver el programa</a>
     </div>
   </div>
@@ -146,6 +154,20 @@
   </div>
 </section>
 
+<section style="background:#fff;">
+  <div class="wrap video-wrap">
+    <h3 style="text-align:center; color:var(--navy2); font-size:17px; font-weight:800; margin-bottom:18px;">CONOZCA AL INSTRUCTOR EN 2 MINUTOS</h3>
+    <div class="video-placeholder">
+      <div class="play-icon">▶</div>
+      <div class="vtitle">Video próximamente</div>
+      <div class="vsub">Israel Peña le explica cómo funciona el programa y qué aprenderá su equipo.</div>
+    </div>
+    <div class="video-cta">
+      <a class="btn btn-primary" href="https://calendly.com/yumerysjimenez/30min" target="_blank" rel="noopener">Agendar llamada (15 min)</a>
+    </div>
+  </div>
+</section>
+
 <section>
   <div class="wrap">
     <div class="offer">
@@ -164,7 +186,10 @@
       <h2>Agende una llamada de 15 minutos</h2>
       <div class="sub">Conozca el programa completo, sin costo ni compromiso</div>
     </div>
-    <a class="btn btn-primary" href="https://wa.me/12013172879?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20programa%20Seguridad%20y%20Safety%20Hospitalaria" target="_blank" rel="noopener">WhatsApp: (201) 317-2879</a>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://calendly.com/yumerysjimenez/30min" target="_blank" rel="noopener">Agendar por Calendly</a>
+      <a class="btn btn-outline" href="https://wa.me/12013172879?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20programa%20Seguridad%20y%20Safety%20Hospitalaria" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
   </div>
 </div>
 
