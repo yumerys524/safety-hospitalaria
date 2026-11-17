@@ -79,6 +79,9 @@
   .col ul{list-style:none;}
   .col li{font-size:15.5px; line-height:1.5; margin-bottom:14px; display:flex; gap:9px;}
   .col li::before{content:"▸"; color:var(--red); font-size:13px; margin-top:3px;}
+  .securitycos-list{list-style:none; color:#fff; font-size:15.5px; line-height:1.7; max-width:720px; margin:18px 0 28px;}
+  .securitycos-list li{margin-bottom:10px; display:flex; gap:9px;}
+  .securitycos-list li::before{content:"▸"; color:var(--gold); font-size:13px; margin-top:3px;}
 
   /* offer */
   .offer{background:var(--tan); border-radius:8px; padding:26px 30px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-top:12px;}
@@ -254,9 +257,25 @@
   </div>
 </section>
 
+<section id="companias-seguridad" style="background:var(--navy);">
+  <div class="wrap">
+    <div class="eyebrow" style="color:var(--gold);" data-i18n="securityCosEyebrow">¿ES USTED UNA COMPAÑÍA DE SEGURIDAD?</div>
+    <h2 class="faq-title" style="color:#fff;" data-i18n="securityCosTitle">Capacite a su equipo antes de que su cliente se lo pida</h2>
+    <p class="faq-intro" style="color:#cdd6e3; max-width:720px;" data-i18n="securityCosIntro">En Latinoamérica, la mayoría de los hospitales y clínicas contratan su seguridad a través de una compañía externa. Si usted presta ese servicio, capacitar a su propio personal con protocolos reales de hospitales de EE.UU. — no teoría genérica de seguridad comercial — es la diferencia que le permite ganar y retener contratos institucionales frente a otras empresas de seguridad.</p>
+    <ul class="securitycos-list" data-i18n-list="securityCosItems">
+      <li>Diferénciese en licitaciones con personal certificado en seguridad hospitalaria específica</li>
+      <li>Reduzca el riesgo de perder el contrato por un incidente mal manejado</li>
+      <li>Un paquete institucional cubre a todo el personal que usted asigne a cada hospital cliente</li>
+    </ul>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#instituciones" data-i18n="securityCosCta">Solicitar propuesta para mi compañía</a>
+    </div>
+  </div>
+</section>
+
 <section id="paquetes">
   <div class="wrap">
-    <div class="eyebrow" style="color:var(--red);" data-i18n="offerLead">PROGRAMA INSTITUCIONAL — HOSPITALES Y CLÍNICAS DE LATINOAMÉRICA</div>
+    <div class="eyebrow" style="color:var(--red);" data-i18n="offerLead">PROGRAMA INSTITUCIONAL — HOSPITALES, CLÍNICAS Y COMPAÑÍAS DE SEGURIDAD DE LATINOAMÉRICA</div>
     <h2 class="faq-title" data-i18n="tiersTitle">Paquetes institucionales</h2>
     <p class="faq-intro" data-i18n="tiersIntro">Cotización por institución, no por persona. Elija el paquete según el tamaño de su equipo y le enviamos una propuesta personalizada.</p>
 
@@ -354,7 +373,7 @@
           <label data-i18n="labelName">Nombre completo
             <input type="text" id="f-nombre" required>
           </label>
-          <label data-i18n="labelInst">Institución / Hospital
+          <label data-i18n="labelInst">Institución / Hospital / Compañía de seguridad
             <input type="text" id="f-institucion" required>
           </label>
         </div>
@@ -373,6 +392,7 @@
             <option value="11-25 personas (Hospital)" data-i18n="opt2">11-25 personas (Hospital)</option>
             <option value="26-50 personas (Red hospitalaria)" data-i18n="opt3">26-50 personas (Red hospitalaria)</option>
             <option value="Más de 50 personas (a la medida)" data-i18n="opt4">Más de 50 personas (a la medida)</option>
+            <option value="Compañía de seguridad (personal propio)" data-i18n="opt5">Compañía de seguridad (personal propio)</option>
           </select>
         </label>
         <label data-i18n="labelMessage">Mensaje (opcional)
@@ -495,7 +515,16 @@
       'Scalable: from a single clinic to a hospital network',
       'Certificate of completion for every participant'
     ],
-    offerLead: 'INSTITUTIONAL PROGRAM — HOSPITALS AND CLINICS IN LATIN AMERICA',
+    securityCosEyebrow: 'ARE YOU A SECURITY COMPANY?',
+    securityCosTitle: 'Train your team before your client asks you to',
+    securityCosIntro: 'In Latin America, most hospitals and clinics outsource their security to an external company. If you provide that service, training your own staff with real U.S. hospital protocols — not generic commercial security theory — is what lets you win and keep institutional contracts against other security firms.',
+    securityCosItems: [
+      'Stand out in bids with staff certified in hospital-specific security',
+      'Reduce the risk of losing the contract over a badly handled incident',
+      'One institutional package covers every officer you assign to each hospital client'
+    ],
+    securityCosCta: 'Request a proposal for my company',
+    offerLead: 'INSTITUTIONAL PROGRAM — HOSPITALS, CLINICS AND SECURITY COMPANIES IN LATIN AMERICA',
     tiersTitle: 'Institutional packages',
     tiersIntro: 'Quoted per institution, not per person. Choose the package that fits the size of your team and we’ll send you a tailored proposal.',
     t1Name: 'CLINIC',
@@ -553,7 +582,7 @@
     instIntro1: 'Fill out the form and we’ll message you on WhatsApp with a proposal: the recommended package for your team, the investment, and available start dates.',
     instIntro2: 'Prefer email? Write to us at <a href="mailto:info@safetyhospitalaria.com" style="color:var(--navy); font-weight:700; text-decoration:underline;">info@safetyhospitalaria.com</a>',
     labelName: 'Full name',
-    labelInst: 'Institution / Hospital',
+    labelInst: 'Institution / Hospital / Security company',
     labelCountry: 'Country',
     labelEmail: 'Email (optional)',
     labelSize: 'Approximate team size',
@@ -562,6 +591,7 @@
     opt2: '11-25 people (Hospital)',
     opt3: '26-50 people (Hospital network)',
     opt4: 'More than 50 people (custom)',
+    opt5: 'Security company (own staff)',
     labelMessage: 'Message (optional)',
     msgPlaceholder: 'Tell us about your needs or estimated start date...',
     sendWhatsapp: 'Request a proposal via WhatsApp',
