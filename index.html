@@ -153,8 +153,8 @@
     .img-banner-tall{height:260px;}
   }
 
-  .agendar-video{margin:0 auto 40px; max-width:420px;}
-  .agendar-video video{width:100%; border-radius:14px; box-shadow:0 12px 32px rgba(16,42,67,0.22); background:#000;}
+  .agendar-video{margin:0 auto 40px; max-width:900px; aspect-ratio:16/9; background:#000; border-radius:14px; box-shadow:0 12px 32px rgba(16,42,67,0.22); overflow:hidden; display:flex; align-items:center; justify-content:center;}
+  .agendar-video video{height:100%; width:auto; max-width:100%; display:block;}
 
   .qualify-form{max-width:480px; margin:0 auto 32px; background:#fff; border-radius:14px; box-shadow:0 8px 24px rgba(16,42,67,0.14); padding:28px 24px;}
   .qualify-form label{display:block; font-size:13px; font-weight:700; color:var(--navy); margin-bottom:6px;}
@@ -301,6 +301,89 @@
   </div>
 </section>
 
+<section id="agendar" style="background:#fff;">
+  <div class="wrap">
+    <div class="agendar-video">
+      <video controls playsinline preload="metadata">
+        <source src="videos/llamada-video.mp4" type="video/mp4">
+        Su navegador no soporta la reproducción de video.
+      </video>
+    </div>
+
+    <div class="section-title" style="text-align:center; font-size:clamp(20px,2.6vw,28px); font-weight:800; color:var(--navy); margin-bottom:8px;" data-i18n="agendarTitle">Agende su llamada</div>
+    <p class="section-sub" style="text-align:center; color:#5a6b80; font-size:15px; margin-bottom:28px;" data-i18n="agendarSub">Cuéntenos un poco sobre su institución y elija el horario que mejor le convenga.</p>
+
+    <form class="qualify-form" id="qualifyForm">
+      <div class="field">
+        <label for="q-nombre" data-i18n="qLabelName">Nombre completo</label>
+        <input type="text" id="q-nombre" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="q-institucion" data-i18n="qLabelInst">Nombre de la institución</label>
+        <input type="text" id="q-institucion" required autocomplete="organization">
+      </div>
+      <div class="field">
+        <label for="q-tamano" data-i18n="qLabelSize">Tamaño del equipo a capacitar</label>
+        <select id="q-tamano" required>
+          <option value="" disabled selected data-i18n="qOptSelect">Seleccione una opción</option>
+          <option value="1-10 personas" data-i18n="qOpt1">1–10 personas</option>
+          <option value="11-30 personas" data-i18n="qOpt2">11–30 personas</option>
+          <option value="31-60 personas" data-i18n="qOpt3">31–60 personas</option>
+          <option value="Más de 60 personas" data-i18n="qOpt4">Más de 60 personas</option>
+        </select>
+      </div>
+      <button type="submit" data-i18n="qSubmit">Continuar para elegir horario</button>
+    </form>
+
+    <div class="calendly-wrap" id="calendlyWrap"></div>
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    <script>
+      (function(){
+        var qForm = document.getElementById('qualifyForm');
+        if (!qForm) return;
+        qForm.addEventListener('submit', function(e){
+          e.preventDefault();
+          var nombre = document.getElementById('q-nombre').value.trim();
+          var institucion = document.getElementById('q-institucion').value.trim();
+          var tamano = document.getElementById('q-tamano').value;
+
+          var notas = 'Institución: ' + institucion + ' | Tamaño del equipo: ' + tamano;
+
+          var baseUrl = 'https://calendly.com/yumerysjimenez/30min?hide_event_type_details=1&hide_gdpr_banner=1';
+          baseUrl += '&name=' + encodeURIComponent(nombre);
+          baseUrl += '&a1=' + encodeURIComponent(notas);
+
+          fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: nombre,
+              organization: institucion,
+              teamSize: tamano,
+              source: 'home-qualify-form',
+            }),
+          }).catch(function(){});
+
+          var wrap = document.getElementById('calendlyWrap');
+          wrap.innerHTML = '<div class="calendly-inline-widget" data-url="' + baseUrl + '" style="min-width:280px;width:100%;height:700px;"></div>';
+          wrap.classList.add('visible');
+
+          qForm.style.display = 'none';
+
+          if (window.Calendly) {
+            window.Calendly.initInlineWidget({
+              url: baseUrl,
+              parentElement: wrap.querySelector('.calendly-inline-widget')
+            });
+          }
+
+          wrap.scrollIntoView({behavior:'smooth', block:'start'});
+        });
+      })();
+    </script>
+  </div>
+</section>
+
 <section id="paquetes">
   <div class="wrap">
     <div class="eyebrow" style="color:var(--red);" data-i18n="offerLead">PROGRAMA INSTITUCIONAL — HOSPITALES, CLÍNICAS Y COMPAÑÍAS DE SEGURIDAD DE LATINOAMÉRICA</div>
@@ -394,89 +477,6 @@
         <div class="faq-body">Las 18 clases son en vivo, no un curso pre-grabado desde el inicio — con ejercicios prácticos, casos reales y espacio para preguntas directas al instructor. Cada clase queda grabada para que su equipo pueda repasarla o verla si no pudo asistir en vivo. Israel Peña combina dos perspectivas poco comunes juntas: gestión de seguridad física dentro de un hospital de EE.UU. y experiencia como Oficial Adjunto del Sheriff, lo que permite cubrir tanto el protocolo interno como la coordinación real con fuerzas del orden.</div>
       </details>
     </div>
-  </div>
-</section>
-
-<section id="agendar" style="background:#fff;">
-  <div class="wrap">
-    <div class="agendar-video">
-      <video controls playsinline preload="metadata">
-        <source src="videos/llamada-video.mp4" type="video/mp4">
-        Su navegador no soporta la reproducción de video.
-      </video>
-    </div>
-
-    <div class="section-title" style="text-align:center; font-size:clamp(20px,2.6vw,28px); font-weight:800; color:var(--navy); margin-bottom:8px;" data-i18n="agendarTitle">Agende su llamada</div>
-    <p class="section-sub" style="text-align:center; color:#5a6b80; font-size:15px; margin-bottom:28px;" data-i18n="agendarSub">Cuéntenos un poco sobre su institución y elija el horario que mejor le convenga.</p>
-
-    <form class="qualify-form" id="qualifyForm">
-      <div class="field">
-        <label for="q-nombre" data-i18n="qLabelName">Nombre completo</label>
-        <input type="text" id="q-nombre" required autocomplete="name">
-      </div>
-      <div class="field">
-        <label for="q-institucion" data-i18n="qLabelInst">Nombre de la institución</label>
-        <input type="text" id="q-institucion" required autocomplete="organization">
-      </div>
-      <div class="field">
-        <label for="q-tamano" data-i18n="qLabelSize">Tamaño del equipo a capacitar</label>
-        <select id="q-tamano" required>
-          <option value="" disabled selected data-i18n="qOptSelect">Seleccione una opción</option>
-          <option value="1-10 personas" data-i18n="qOpt1">1–10 personas</option>
-          <option value="11-30 personas" data-i18n="qOpt2">11–30 personas</option>
-          <option value="31-60 personas" data-i18n="qOpt3">31–60 personas</option>
-          <option value="Más de 60 personas" data-i18n="qOpt4">Más de 60 personas</option>
-        </select>
-      </div>
-      <button type="submit" data-i18n="qSubmit">Continuar para elegir horario</button>
-    </form>
-
-    <div class="calendly-wrap" id="calendlyWrap"></div>
-    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-    <script>
-      (function(){
-        var qForm = document.getElementById('qualifyForm');
-        if (!qForm) return;
-        qForm.addEventListener('submit', function(e){
-          e.preventDefault();
-          var nombre = document.getElementById('q-nombre').value.trim();
-          var institucion = document.getElementById('q-institucion').value.trim();
-          var tamano = document.getElementById('q-tamano').value;
-
-          var notas = 'Institución: ' + institucion + ' | Tamaño del equipo: ' + tamano;
-
-          var baseUrl = 'https://calendly.com/yumerysjimenez/30min?hide_event_type_details=1&hide_gdpr_banner=1';
-          baseUrl += '&name=' + encodeURIComponent(nombre);
-          baseUrl += '&a1=' + encodeURIComponent(notas);
-
-          fetch('/api/lead', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              name: nombre,
-              organization: institucion,
-              teamSize: tamano,
-              source: 'home-qualify-form',
-            }),
-          }).catch(function(){});
-
-          var wrap = document.getElementById('calendlyWrap');
-          wrap.innerHTML = '<div class="calendly-inline-widget" data-url="' + baseUrl + '" style="min-width:280px;width:100%;height:700px;"></div>';
-          wrap.classList.add('visible');
-
-          qForm.style.display = 'none';
-
-          if (window.Calendly) {
-            window.Calendly.initInlineWidget({
-              url: baseUrl,
-              parentElement: wrap.querySelector('.calendly-inline-widget')
-            });
-          }
-
-          wrap.scrollIntoView({behavior:'smooth', block:'start'});
-        });
-      })();
-    </script>
   </div>
 </section>
 
