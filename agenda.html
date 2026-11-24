@@ -57,14 +57,23 @@
   .sell-points li{display:flex; gap:10px; color:var(--ink); font-size:15px; line-height:1.5;}
   .sell-points li::before{content:"✓"; color:var(--red); font-weight:800; flex-shrink:0;}
 
-  .video-block{margin:0 auto 48px; max-width:420px; padding:28px; background:linear-gradient(160deg, var(--navy) 0%, var(--navy2) 100%); border-radius:20px; box-shadow:0 16px 40px rgba(16,42,67,0.18);}
-  .video-block video{width:100%; border-radius:14px; box-shadow:0 12px 32px rgba(0,0,0,0.3); background:#000;}
+  .video-block{margin:0 auto 48px; max-width:420px;}
+  .video-block video{width:100%; border-radius:14px; box-shadow:0 12px 32px rgba(16,42,67,0.22); background:#000;}
 
   .section-title{text-align:center; font-size:clamp(20px,2.6vw,28px); font-weight:800; color:var(--navy); margin-bottom:8px;}
   .section-sub{text-align:center; color:#5a6b80; font-size:15px; margin-bottom:28px;}
 
-  .calendly-wrap{border-radius:14px; overflow:hidden; box-shadow:0 8px 24px rgba(16,42,67,0.14); background:#fff;}
-  .calendly-inline-widget{min-width:320px; height:700px;}
+  .qualify-form{max-width:480px; margin:0 auto 32px; background:#fff; border-radius:14px; box-shadow:0 8px 24px rgba(16,42,67,0.14); padding:28px 24px;}
+  .qualify-form label{display:block; font-size:13px; font-weight:700; color:var(--navy); margin-bottom:6px;}
+  .qualify-form .field{margin-bottom:16px;}
+  .qualify-form input, .qualify-form select{width:100%; padding:12px 14px; border:1.5px solid var(--tan); border-radius:8px; font-size:15px; font-family:inherit; color:var(--ink); background:var(--cream);}
+  .qualify-form input:focus, .qualify-form select:focus{outline:none; border-color:var(--red);}
+  .qualify-form button{width:100%; padding:16px; border:none; border-radius:8px; background:var(--red); color:#fff; font-weight:800; font-size:16px; cursor:pointer; margin-top:4px;}
+  .qualify-form button:hover{background:var(--red2);}
+
+  .calendly-wrap{border-radius:14px; overflow:hidden; box-shadow:0 8px 24px rgba(16,42,67,0.14); background:#fff; display:none;}
+  .calendly-wrap.visible{display:block;}
+  .calendly-inline-widget{min-width:280px; width:100%; height:700px;}
 
   footer{background:var(--navy); color:#9fb3c8; text-align:center; font-size:13px; padding:24px 0; letter-spacing:0.3px;}
   footer a{text-decoration:underline;}
@@ -73,6 +82,10 @@
     header{padding:36px 0 32px;}
     main{padding:36px 0 48px;}
     .calendly-inline-widget{height:620px;}
+    .qualify-form{padding:22px 18px;}
+  }
+  @media (max-width:360px){
+    .calendly-inline-widget{min-width:260px;}
   }
 </style>
 </head>
@@ -105,19 +118,79 @@
     </div>
 
     <div class="video-block">
-      <video controls playsinline preload="metadata" poster="images/hospital_interior.jpg">
+      <video controls playsinline preload="metadata">
         <source src="videos/llamada-video.mp4" type="video/mp4">
         Su navegador no soporta la reproducción de video.
       </video>
     </div>
 
     <div id="agendar" class="section-title">Agende su llamada</div>
-    <p class="section-sub">Elija el horario que mejor le convenga, sin compromiso.</p>
+    <p class="section-sub">Cuéntenos un poco sobre su institución y elija el horario que mejor le convenga.</p>
 
-    <div class="calendly-wrap">
-      <div class="calendly-inline-widget" data-url="https://calendly.com/yumerysjimenez/30min?hide_event_type_details=1&hide_gdpr_banner=1" style="min-width:320px;height:700px;"></div>
-      <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-    </div>
+    <form class="qualify-form" id="qualifyForm">
+      <div class="field">
+        <label for="q-nombre">Nombre completo</label>
+        <input type="text" id="q-nombre" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="q-email">Correo electrónico</label>
+        <input type="email" id="q-email" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="q-institucion">Nombre de la institución</label>
+        <input type="text" id="q-institucion" required autocomplete="organization">
+      </div>
+      <div class="field">
+        <label for="q-cargo">Su cargo</label>
+        <input type="text" id="q-cargo" required placeholder="Ej. Director de Seguridad, Gerente de RR.HH....">
+      </div>
+      <div class="field">
+        <label for="q-tamano">Tamaño del equipo a capacitar</label>
+        <select id="q-tamano" required>
+          <option value="" disabled selected>Seleccione una opción</option>
+          <option value="1-10 personas">1–10 personas</option>
+          <option value="11-30 personas">11–30 personas</option>
+          <option value="31-60 personas">31–60 personas</option>
+          <option value="Más de 60 personas">Más de 60 personas</option>
+        </select>
+      </div>
+      <button type="submit">Continuar para elegir horario</button>
+    </form>
+
+    <div class="calendly-wrap" id="calendlyWrap"></div>
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    <script>
+      document.getElementById('qualifyForm').addEventListener('submit', function(e){
+        e.preventDefault();
+        var nombre = document.getElementById('q-nombre').value.trim();
+        var email = document.getElementById('q-email').value.trim();
+        var institucion = document.getElementById('q-institucion').value.trim();
+        var cargo = document.getElementById('q-cargo').value.trim();
+        var tamano = document.getElementById('q-tamano').value;
+
+        var notas = 'Institución: ' + institucion + ' | Cargo: ' + cargo + ' | Tamaño del equipo: ' + tamano;
+
+        var baseUrl = 'https://calendly.com/yumerysjimenez/30min?hide_event_type_details=1&hide_gdpr_banner=1';
+        baseUrl += '&name=' + encodeURIComponent(nombre);
+        baseUrl += '&email=' + encodeURIComponent(email);
+        baseUrl += '&a1=' + encodeURIComponent(notas);
+
+        var wrap = document.getElementById('calendlyWrap');
+        wrap.innerHTML = '<div class="calendly-inline-widget" data-url="' + baseUrl + '" style="min-width:280px;width:100%;height:700px;"></div>';
+        wrap.classList.add('visible');
+
+        document.getElementById('qualifyForm').style.display = 'none';
+
+        if (window.Calendly) {
+          window.Calendly.initInlineWidget({
+            url: baseUrl,
+            parentElement: wrap.querySelector('.calendly-inline-widget')
+          });
+        }
+
+        wrap.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    </script>
   </div>
 </main>
 
