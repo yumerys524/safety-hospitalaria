@@ -27,6 +27,7 @@
     --cream:#f5f7fa; --tan:#dce5ee; --ink:#26384a;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
   body{font-family:'Inter',sans-serif; background:var(--cream); color:var(--ink); -webkit-font-smoothing:antialiased;}
   img{max-width:100%; display:block;}
   a{color:inherit; text-decoration:none;}
@@ -41,11 +42,20 @@
   .header-logo{width:110px; height:110px; margin:0 auto 20px; display:block; filter:drop-shadow(0 6px 18px rgba(0,0,0,0.4));}
   .hero-inner{max-width:680px; text-align:center; margin:0 auto;}
   .eyebrow{color:var(--gold); font-weight:800; font-size:14px; letter-spacing:1.5px; margin-bottom:10px;}
-  h1{font-size:clamp(26px,4.2vw,40px); font-weight:800; line-height:1.15; margin-bottom:14px;}
+  h1{font-size:clamp(24px,4.2vw,38px); font-weight:800; line-height:1.2; margin-bottom:14px; word-wrap:break-word;}
   h1 .accent{color:var(--gold);}
-  .desc{color:#cdd6e3; font-size:clamp(15px,1.8vw,18px); line-height:1.6; max-width:640px; margin:0 auto;}
+  .desc{color:#cdd6e3; font-size:clamp(15px,1.8vw,18px); line-height:1.6; max-width:640px; margin:0 auto 28px;}
+  .hero-cta{display:inline-block; padding:16px 32px; border-radius:8px; font-weight:800; font-size:16px; background:var(--red); color:#fff; box-shadow:0 4px 12px rgba(10,27,44,0.25); border:none; cursor:pointer;}
+  .hero-cta:hover{background:var(--red2);}
 
   main{padding:48px 0 72px;}
+
+  .sell-block{max-width:720px; margin:0 auto 48px; text-align:center;}
+  .sell-block h2{font-size:clamp(20px,2.6vw,26px); font-weight:800; color:var(--navy); margin-bottom:16px;}
+  .sell-block p{color:#45586c; font-size:16px; line-height:1.7; margin-bottom:14px;}
+  .sell-points{list-style:none; text-align:left; max-width:560px; margin:24px auto 0; display:grid; gap:12px;}
+  .sell-points li{display:flex; gap:10px; color:var(--ink); font-size:15px; line-height:1.5;}
+  .sell-points li::before{content:"✓"; color:var(--red); font-weight:800; flex-shrink:0;}
 
   .video-block{margin:0 auto 48px; max-width:420px;}
   .video-block video{width:100%; border-radius:14px; box-shadow:0 12px 32px rgba(16,42,67,0.22); background:#000;}
@@ -74,13 +84,25 @@
   <div class="wrap hero-inner">
     <img class="header-logo" src="logo.png" alt="Seguridad y Safety Hospitalaria">
     <div class="eyebrow">SEGURIDAD Y SAFETY HOSPITALARIA</div>
-    <h1>Vea cómo funciona el programa <span class="accent">y agende su llamada</span></h1>
-    <p class="desc">En menos de 3 minutos le mostramos cómo trabajamos con hospitales y clínicas. Después, elija el horario que mejor le convenga.</p>
+    <h1>Capacitación institucional en seguridad <span class="accent">para hospitales y clínicas</span></h1>
+    <p class="desc">Vea en pocos minutos cómo trabajamos con hospitales y clínicas de Latinoamérica, con protocolos reales usados en Estados Unidos.</p>
+    <a class="hero-cta" href="#agendar">Agendar llamada</a>
   </div>
 </header>
 
 <main>
   <div class="wrap">
+    <div class="sell-block">
+      <h2>Un programa en vivo, con protocolos reales de hospitales de EE.UU.</h2>
+      <p>Capacitamos a todo el equipo de seguridad, enfermería y administración de su institución — dos veces por semana, 100% en español, con un instructor de doble autoridad: hospital + fuerzas del orden en Estados Unidos.</p>
+      <ul class="sell-points">
+        <li>Protocolos reales usados en hospitales de EE.UU., adaptados a su institución</li>
+        <li>Clases en vivo, dos veces por semana, para todo el equipo</li>
+        <li>Comunidad privada y certificado al finalizar</li>
+        <li>Paquetes institucionales según el tamaño de su equipo</li>
+      </ul>
+    </div>
+
     <div class="video-block">
       <video controls playsinline preload="metadata" poster="images/hero_security.jpg">
         <source src="videos/llamada-video.mp4" type="video/mp4">
@@ -88,7 +110,7 @@
       </video>
     </div>
 
-    <div class="section-title">Agende su llamada</div>
+    <div id="agendar" class="section-title">Agende su llamada</div>
     <p class="section-sub">Elija el horario que mejor le convenga, sin compromiso.</p>
 
     <div class="calendly-wrap">
