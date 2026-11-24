@@ -27,6 +27,7 @@
     --cream:#f5f7fa; --tan:#dce5ee; --ink:#26384a;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
   body{font-family:'Inter',sans-serif; background:var(--cream); color:var(--ink); -webkit-font-smoothing:antialiased;}
   img{max-width:100%; display:block;}
   a{color:inherit; text-decoration:none;}
@@ -152,6 +153,29 @@
     .img-banner-tall{height:260px;}
   }
 
+  .agendar-video{margin:0 auto 40px; max-width:420px;}
+  .agendar-video video{width:100%; border-radius:14px; box-shadow:0 12px 32px rgba(16,42,67,0.22); background:#000;}
+
+  .qualify-form{max-width:480px; margin:0 auto 32px; background:#fff; border-radius:14px; box-shadow:0 8px 24px rgba(16,42,67,0.14); padding:28px 24px;}
+  .qualify-form label{display:block; font-size:13px; font-weight:700; color:var(--navy); margin-bottom:6px;}
+  .qualify-form .field{margin-bottom:16px;}
+  .qualify-form input, .qualify-form select{width:100%; padding:12px 14px; border:1.5px solid var(--tan); border-radius:8px; font-size:15px; font-family:inherit; color:var(--ink); background:var(--cream);}
+  .qualify-form input:focus, .qualify-form select:focus{outline:none; border-color:var(--red);}
+  .qualify-form button{width:100%; padding:16px; border:none; border-radius:8px; background:var(--red); color:#fff; font-weight:800; font-size:16px; cursor:pointer; margin-top:4px;}
+  .qualify-form button:hover{background:var(--red2);}
+
+  .calendly-wrap{border-radius:14px; overflow:hidden; box-shadow:0 8px 24px rgba(16,42,67,0.14); background:#fff; display:none; max-width:900px; margin:0 auto;}
+  .calendly-wrap.visible{display:block;}
+  .calendly-inline-widget{min-width:280px; width:100%; height:700px;}
+
+  @media (max-width:640px){
+    .calendly-inline-widget{height:620px;}
+    .qualify-form{padding:22px 18px;}
+  }
+  @media (max-width:360px){
+    .calendly-inline-widget{min-width:260px;}
+  }
+
   /* cta bar */
   .ctabar{background:linear-gradient(110deg,var(--navy),var(--navy2)); padding:48px 0; color:#fff;}
   .ctabar .inner{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px;}
@@ -192,7 +216,7 @@
       <p class="desc" data-i18n="heroDesc">Un programa en vivo, dos veces por semana, para capacitar a todo el equipo de seguridad, enfermería y administración de su institución — con protocolos reales usados en hospitales de Estados Unidos. Paquetes institucionales para hospitales, clínicas y redes de salud de Latinoamérica.</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="#instituciones" data-i18n="ctaProposal">Solicitar propuesta</a>
-        <a class="btn btn-outline" href="/agenda.html" data-i18n="ctaCalendly">Agendar llamada</a>
+        <a class="btn btn-outline" href="#agendar" data-i18n="ctaCalendly">Agendar llamada</a>
         <a class="btn btn-outline" href="#paquetes" data-i18n="seePackages">Ver paquetes</a>
       </div>
     </div>
@@ -373,6 +397,89 @@
   </div>
 </section>
 
+<section id="agendar" style="background:#fff;">
+  <div class="wrap">
+    <div class="agendar-video">
+      <video controls playsinline preload="metadata">
+        <source src="videos/llamada-video.mp4" type="video/mp4">
+        Su navegador no soporta la reproducción de video.
+      </video>
+    </div>
+
+    <div class="section-title" style="text-align:center; font-size:clamp(20px,2.6vw,28px); font-weight:800; color:var(--navy); margin-bottom:8px;" data-i18n="agendarTitle">Agende su llamada</div>
+    <p class="section-sub" style="text-align:center; color:#5a6b80; font-size:15px; margin-bottom:28px;" data-i18n="agendarSub">Cuéntenos un poco sobre su institución y elija el horario que mejor le convenga.</p>
+
+    <form class="qualify-form" id="qualifyForm">
+      <div class="field">
+        <label for="q-nombre" data-i18n="qLabelName">Nombre completo</label>
+        <input type="text" id="q-nombre" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="q-institucion" data-i18n="qLabelInst">Nombre de la institución</label>
+        <input type="text" id="q-institucion" required autocomplete="organization">
+      </div>
+      <div class="field">
+        <label for="q-tamano" data-i18n="qLabelSize">Tamaño del equipo a capacitar</label>
+        <select id="q-tamano" required>
+          <option value="" disabled selected data-i18n="qOptSelect">Seleccione una opción</option>
+          <option value="1-10 personas" data-i18n="qOpt1">1–10 personas</option>
+          <option value="11-30 personas" data-i18n="qOpt2">11–30 personas</option>
+          <option value="31-60 personas" data-i18n="qOpt3">31–60 personas</option>
+          <option value="Más de 60 personas" data-i18n="qOpt4">Más de 60 personas</option>
+        </select>
+      </div>
+      <button type="submit" data-i18n="qSubmit">Continuar para elegir horario</button>
+    </form>
+
+    <div class="calendly-wrap" id="calendlyWrap"></div>
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    <script>
+      (function(){
+        var qForm = document.getElementById('qualifyForm');
+        if (!qForm) return;
+        qForm.addEventListener('submit', function(e){
+          e.preventDefault();
+          var nombre = document.getElementById('q-nombre').value.trim();
+          var institucion = document.getElementById('q-institucion').value.trim();
+          var tamano = document.getElementById('q-tamano').value;
+
+          var notas = 'Institución: ' + institucion + ' | Tamaño del equipo: ' + tamano;
+
+          var baseUrl = 'https://calendly.com/yumerysjimenez/30min?hide_event_type_details=1&hide_gdpr_banner=1';
+          baseUrl += '&name=' + encodeURIComponent(nombre);
+          baseUrl += '&a1=' + encodeURIComponent(notas);
+
+          fetch('/api/lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: nombre,
+              organization: institucion,
+              teamSize: tamano,
+              source: 'home-qualify-form',
+            }),
+          }).catch(function(){});
+
+          var wrap = document.getElementById('calendlyWrap');
+          wrap.innerHTML = '<div class="calendly-inline-widget" data-url="' + baseUrl + '" style="min-width:280px;width:100%;height:700px;"></div>';
+          wrap.classList.add('visible');
+
+          qForm.style.display = 'none';
+
+          if (window.Calendly) {
+            window.Calendly.initInlineWidget({
+              url: baseUrl,
+              parentElement: wrap.querySelector('.calendly-inline-widget')
+            });
+          }
+
+          wrap.scrollIntoView({behavior:'smooth', block:'start'});
+        });
+      })();
+    </script>
+  </div>
+</section>
+
 <section id="instituciones" style="background:var(--tan);">
   <div class="wrap">
     <div class="inst-grid">
@@ -426,7 +533,7 @@
     </div>
     <div class="cta-row" style="margin:0;">
       <a class="btn btn-primary" href="#instituciones" data-i18n="ctaProposal">Solicitar propuesta</a>
-      <a class="btn btn-outline" href="/agenda.html" data-i18n="ctaCalendly">Agendar llamada</a>
+      <a class="btn btn-outline" href="#agendar" data-i18n="ctaCalendly">Agendar llamada</a>
       <a class="btn btn-outline" href="#paquetes" data-i18n="seePackages">Ver paquetes</a>
     </div>
   </div>
@@ -496,6 +603,17 @@
     heroDesc: 'A live program, twice a week, to train your institution’s entire security, nursing, and administrative team — using real protocols used in U.S. hospitals. Institutional packages for hospitals, clinics, and health networks in Latin America.',
     ctaProposal: 'Request a proposal',
     ctaCalendly: 'Book a call',
+    agendarTitle: 'Book your call',
+    agendarSub: 'Tell us a bit about your institution and pick the time that works best for you.',
+    qLabelName: 'Full name',
+    qLabelInst: 'Institution name',
+    qLabelSize: 'Team size to train',
+    qOptSelect: 'Select an option',
+    qOpt1: '1–10 people',
+    qOpt2: '11–30 people',
+    qOpt3: '31–60 people',
+    qOpt4: 'More than 60 people',
+    qSubmit: 'Continue to pick a time',
     seePackages: 'See packages',
     cardInstructorLabel: 'INSTRUCTOR',
     cardInstructorValue: 'Israel Peña — Physical Security and Safety Manager, U.S. hospital system.',
