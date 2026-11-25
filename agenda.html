@@ -137,6 +137,10 @@
         <input type="text" id="q-institucion" required autocomplete="organization">
       </div>
       <div class="field">
+        <label for="q-email">Correo electrónico</label>
+        <input type="email" id="q-email" required autocomplete="email">
+      </div>
+      <div class="field">
         <label for="q-tamano">Tamaño del equipo a capacitar</label>
         <select id="q-tamano" required>
           <option value="" disabled selected>Seleccione una opción</option>
@@ -156,23 +160,25 @@
         e.preventDefault();
         var nombre = document.getElementById('q-nombre').value.trim();
         var institucion = document.getElementById('q-institucion').value.trim();
+        var email = document.getElementById('q-email').value.trim();
         var tamano = document.getElementById('q-tamano').value;
 
         var notas = 'Institución: ' + institucion + ' | Tamaño del equipo: ' + tamano;
 
         var baseUrl = 'https://calendly.com/yumerysjimenez/30min?hide_event_type_details=1&hide_gdpr_banner=1';
         baseUrl += '&name=' + encodeURIComponent(nombre);
+        baseUrl += '&email=' + encodeURIComponent(email);
         baseUrl += '&a1=' + encodeURIComponent(notas);
 
         // Best-effort: send the qualification lead to the backend (GHL), same
-        // pattern as the main site's form in index.html. Pending: GHL_WEBHOOK_URL
-        // wiring for Seguridad Hospitalaria (see /api/lead on the main form).
+        // pattern as the main site's form in index.html.
         fetch('/api/lead', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             name: nombre,
             organization: institucion,
+            email: email,
             teamSize: tamano,
             source: 'agenda-qualify-form',
           }),
