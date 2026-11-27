@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel de administración — Seguridad y Safety Hospitalaria</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#102a43; --navy2:#163a59; --red:#245c89; --red2:#1b466b;
+    --cream:#f5f7fa; --tan:#dce5ee; --ink:#26384a;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Inter',sans-serif; background:var(--cream); color:var(--ink);}
+  .wrap{max-width:1200px; margin:0 auto; padding:24px;}
+
+  header{background:var(--navy); color:#fff; padding:20px 0;}
+  header .wrap{display:flex; justify-content:space-between; align-items:center;}
+  header h1{font-size:18px; font-weight:800;}
+  header .user-info{font-size:14px; color:#cdd6e3; display:flex; align-items:center; gap:12px;}
+  header button{background:transparent; border:1px solid #91abc2; color:#fff; padding:6px 14px; border-radius:6px; font-size:13px; cursor:pointer;}
+  header button:hover{background:rgba(255,255,255,0.1);}
+
+  #login-screen{display:flex; align-items:center; justify-content:center; min-height:100vh; padding:20px;}
+  .login-box{background:#fff; border-radius:14px; box-shadow:0 8px 24px rgba(16,42,67,0.14); padding:40px; max-width:360px; width:100%;}
+  .login-box h2{font-size:20px; font-weight:800; color:var(--navy); margin-bottom:20px; text-align:center;}
+  .login-box label{display:block; font-size:13px; font-weight:700; color:var(--navy); margin-bottom:6px;}
+  .login-box .field{margin-bottom:16px;}
+  .login-box input{width:100%; padding:12px 14px; border:1.5px solid var(--tan); border-radius:8px; font-size:15px; font-family:inherit;}
+  .login-box button{width:100%; padding:14px; border:none; border-radius:8px; background:var(--red); color:#fff; font-weight:800; font-size:15px; cursor:pointer; margin-top:8px;}
+  .login-box button:hover{background:var(--red2);}
+  .login-error{color:#c0392b; font-size:13px; margin-top:10px; text-align:center;}
+  #login-error, #register-error{display:none;}
+  .toggle-link{text-align:center; margin-top:16px; font-size:13px;}
+  .toggle-link a{color:var(--red); text-decoration:underline; cursor:pointer;}
+
+  #app-screen{display:none;}
+
+  .stats-row{display:flex; gap:16px; margin-bottom:24px; flex-wrap:wrap;}
+  .stat-card{background:#fff; border-radius:10px; padding:16px 20px; box-shadow:0 2px 8px rgba(16,42,67,0.08); flex:1; min-width:140px;}
+  .stat-card .num{font-size:24px; font-weight:800; color:var(--navy);}
+  .stat-card .label{font-size:12px; color:#5a6b80; text-transform:uppercase; letter-spacing:0.5px;}
+
+  table{width:100%; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 2px 8px rgba(16,42,67,0.08); border-collapse:collapse;}
+  th{background:var(--tan); text-align:left; padding:12px 14px; font-size:12px; text-transform:uppercase; letter-spacing:0.5px; color:var(--navy);}
+  td{padding:12px 14px; border-top:1px solid #eef1f5; font-size:14px; vertical-align:top;}
+  tr:hover td{background:#fafbfc;}
+
+  select.status-select{padding:6px 10px; border-radius:6px; border:1.5px solid var(--tan); font-size:13px; font-family:inherit; background:#fff;}
+  textarea.notes-input{width:100%; min-height:50px; padding:8px; border:1.5px solid var(--tan); border-radius:6px; font-size:13px; font-family:inherit; resize:vertical;}
+  .save-btn{background:var(--red); color:#fff; border:none; padding:6px 12px; border-radius:6px; font-size:12px; cursor:pointer; margin-top:6px;}
+  .save-btn:hover{background:var(--red2);}
+  .saved-badge{color:#2e7d32; font-size:12px; margin-left:8px; display:none;}
+
+  .status-nuevo{color:#1b466b; font-weight:700;}
+  .status-contactado{color:#b8860b; font-weight:700;}
+  .status-llamada-agendada{color:#2563eb; font-weight:700;}
+  .status-propuesta-enviada{color:#7c3aed; font-weight:700;}
+  .status-ganado{color:#15803d; font-weight:700;}
+  .status-perdido{color:#b91c1c; font-weight:700;}
+
+  .loading, .empty-state{text-align:center; padding:60px 20px; color:#5a6b80;}
+
+  @media (max-width:760px){
+    table, thead, tbody, th, td, tr{display:block;}
+    thead{display:none;}
+    tr{background:#fff; margin-bottom:12px; border-radius:10px; box-shadow:0 2px 8px rgba(16,42,67,0.08); padding:12px;}
+    td{border:none; padding:6px 0;}
+    td::before{content:attr(data-label); font-weight:700; color:var(--navy); display:block; font-size:11px; text-transform:uppercase;}
+  }
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <div class="login-box">
+    <h2>Panel de administración</h2>
+    <form id="login-form">
+      <div class="field">
+        <label for="login-email">Correo electrónico</label>
+        <input type="email" id="login-email" required autocomplete="username">
+      </div>
+      <div class="field">
+        <label for="login-password">Contraseña</label>
+        <input type="password" id="login-password" required autocomplete="current-password">
+      </div>
+      <button type="submit">Entrar</button>
+      <div class="login-error" id="login-error">Correo o contraseña incorrectos.</div>
+    </form>
+    <p class="toggle-link"><a href="#" id="show-register">¿No tienes cuenta? Regístrate con tu código de invitación</a></p>
+  </div>
+
+  <div class="login-box" id="register-box" style="display:none;">
+    <h2>Crear cuenta</h2>
+    <form id="register-form">
+      <div class="field">
+        <label for="register-email">Correo electrónico</label>
+        <input type="email" id="register-email" required autocomplete="username">
+      </div>
+      <div class="field">
+        <label for="register-password">Contraseña (mínimo 8 caracteres)</label>
+        <input type="password" id="register-password" required minlength="8" autocomplete="new-password">
+      </div>
+      <div class="field">
+        <label for="register-invite">Código de invitación</label>
+        <input type="text" id="register-invite" required autocomplete="off">
+      </div>
+      <button type="submit">Crear cuenta</button>
+      <div class="login-error" id="register-error"></div>
+    </form>
+    <p class="toggle-link"><a href="#" id="show-login">Ya tengo cuenta, iniciar sesión</a></p>
+  </div>
+</div>
+
+<div id="app-screen">
+  <header>
+    <div class="wrap">
+      <h1>Seguridad y Safety Hospitalaria — CRM</h1>
+      <div class="user-info">
+        <span id="user-label"></span>
+        <button id="logout-btn">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="stats-row" id="stats-row"></div>
+    <div id="leads-container">
+      <div class="loading">Cargando leads...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const STATUSES = ['nuevo', 'contactado', 'llamada agendada', 'propuesta enviada', 'ganado', 'perdido'];
+
+  const loginScreen = document.getElementById('login-screen');
+  const appScreen = document.getElementById('app-screen');
+  const loginForm = document.getElementById('login-form');
+  const loginError = document.getElementById('login-error');
+  const leadsContainer = document.getElementById('leads-container');
+  const statsRow = document.getElementById('stats-row');
+  const userLabel = document.getElementById('user-label');
+  const logoutBtn = document.getElementById('logout-btn');
+
+  function statusClass(status) {
+    return 'status-' + status.replace(/\s+/g, '-');
+  }
+
+  function renderStats(leads) {
+    const counts = {};
+    STATUSES.forEach(s => counts[s] = 0);
+    leads.forEach(l => { if (counts[l.status] !== undefined) counts[l.status]++; });
+
+    statsRow.innerHTML = STATUSES.map(s => `
+      <div class="stat-card">
+        <div class="num">${counts[s]}</div>
+        <div class="label">${s}</div>
+      </div>
+    `).join('') + `
+      <div class="stat-card">
+        <div class="num">${leads.length}</div>
+        <div class="label">Total</div>
+      </div>
+    `;
+  }
+
+  function renderLeads(leads) {
+    if (leads.length === 0) {
+      leadsContainer.innerHTML = '<div class="empty-state">Aún no hay leads registrados.</div>';
+      return;
+    }
+
+    const rows = leads.map(lead => `
+      <tr data-id="${lead.id}">
+        <td data-label="Fecha">${new Date(lead.created_at).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
+        <td data-label="Nombre">${escapeHtml(lead.name)}</td>
+        <td data-label="Institución">${escapeHtml(lead.organization || '—')}</td>
+        <td data-label="Email">${escapeHtml(lead.email || '—')}</td>
+        <td data-label="Tamaño equipo">${escapeHtml(lead.team_size || '—')}</td>
+        <td data-label="Fuente">${escapeHtml(lead.source || '—')}</td>
+        <td data-label="Estado">
+          <select class="status-select ${statusClass(lead.status)}" data-field="status">
+            ${STATUSES.map(s => `<option value="${s}" ${s === lead.status ? 'selected' : ''}>${s}</option>`).join('')}
+          </select>
+        </td>
+        <td data-label="Notas">
+          <textarea class="notes-input" data-field="notes" placeholder="Notas de seguimiento...">${escapeHtml(lead.notes || '')}</textarea>
+          <button class="save-btn">Guardar</button>
+          <span class="saved-badge">✓ Guardado</span>
+        </td>
+      </tr>
+    `).join('');
+
+    leadsContainer.innerHTML = `
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th><th>Nombre</th><th>Institución</th><th>Email</th>
+            <th>Tamaño equipo</th><th>Fuente</th><th>Estado</th><th>Notas</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    `;
+
+    leadsContainer.querySelectorAll('tr[data-id]').forEach(row => {
+      const id = row.getAttribute('data-id');
+      const saveBtn = row.querySelector('.save-btn');
+      const statusSelect = row.querySelector('[data-field="status"]');
+      const notesInput = row.querySelector('[data-field="notes"]');
+      const savedBadge = row.querySelector('.saved-badge');
+
+      statusSelect.addEventListener('change', () => {
+        statusSelect.className = 'status-select ' + statusClass(statusSelect.value);
+      });
+
+      saveBtn.addEventListener('click', async () => {
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'Guardando...';
+        try {
+          await fetch('/api/admin/leads', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id, status: statusSelect.value, notes: notesInput.value }),
+          });
+          savedBadge.style.display = 'inline';
+          setTimeout(() => { savedBadge.style.display = 'none'; }, 2000);
+        } catch (e) {
+          alert('Error al guardar. Intenta de nuevo.');
+        }
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Guardar';
+      });
+    });
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  async function loadLeads() {
+    try {
+      const res = await fetch('/api/admin/leads');
+      if (res.status === 401) {
+        showLogin();
+        return false;
+      }
+      const data = await res.json();
+      renderStats(data.leads);
+      renderLeads(data.leads);
+      return true;
+    } catch (e) {
+      leadsContainer.innerHTML = '<div class="empty-state">Error al cargar los leads.</div>';
+      return true;
+    }
+  }
+
+  function showApp(email) {
+    loginScreen.style.display = 'none';
+    appScreen.style.display = 'block';
+    userLabel.textContent = email;
+    loadLeads();
+  }
+
+  function showLogin() {
+    loginScreen.style.display = 'flex';
+    appScreen.style.display = 'none';
+    document.getElementById('register-box').style.display = 'none';
+    document.querySelector('#login-screen > .login-box:first-child').style.display = 'block';
+  }
+
+  document.getElementById('show-register').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelector('#login-screen > .login-box:first-child').style.display = 'none';
+    document.getElementById('register-box').style.display = 'block';
+  });
+
+  document.getElementById('show-login').addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('register-box').style.display = 'none';
+    document.querySelector('#login-screen > .login-box:first-child').style.display = 'block';
+  });
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    loginError.style.display = 'none';
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+
+    try {
+      const res = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        showApp(data.email);
+      } else {
+        loginError.style.display = 'block';
+      }
+    } catch (e) {
+      loginError.style.display = 'block';
+    }
+  });
+
+  document.getElementById('register-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const registerError = document.getElementById('register-error');
+    registerError.style.display = 'none';
+    const email = document.getElementById('register-email').value.trim();
+    const password = document.getElementById('register-password').value;
+    const inviteCode = document.getElementById('register-invite').value.trim();
+
+    try {
+      const res = await fetch('/api/admin/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, inviteCode }),
+      });
+      const data = await res.json();
+      if (data.ok) {
+        showApp(data.email);
+      } else {
+        const messages = {
+          invalid_invite_code: 'Código de invitación inválido.',
+          email_already_registered: 'Ese correo ya tiene una cuenta. Inicia sesión.',
+          password_too_short: 'La contraseña debe tener al menos 8 caracteres.',
+          missing_fields: 'Completa todos los campos.',
+        };
+        registerError.textContent = messages[data.error] || 'No se pudo crear la cuenta.';
+        registerError.style.display = 'block';
+      }
+    } catch (e) {
+      registerError.textContent = 'No se pudo crear la cuenta. Intenta de nuevo.';
+      registerError.style.display = 'block';
+    }
+  });
+
+  logoutBtn.addEventListener('click', () => {
+    document.cookie = 'admin_session=; Path=/; Max-Age=0';
+    showLogin();
+  });
+
+  // On page load, check if there's a valid session cookie already
+  fetch('/api/admin/me').then(async (res) => {
+    if (res.status === 200) {
+      const data = await res.json();
+      showApp(data.email);
+    } else {
+      showLogin();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
