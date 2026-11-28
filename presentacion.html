@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seguridad y Safety Hospitalaria — Presentación institucional</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#102a43; --navy2:#163a59; --gold:#b8d4ec; --red:#245c89; --red2:#1b466b;
+    --cream:#f5f7fa; --tan:#dce5ee; --ink:#26384a;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',sans-serif; background:var(--cream); color:var(--ink); -webkit-font-smoothing:antialiased;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:980px; margin:0 auto; padding:0 24px;}
+  .stripes{height:4px; width:100%; background:linear-gradient(90deg, var(--navy), #527fa3, var(--gold), var(--navy));}
+
+  section{padding:72px 0;}
+  section:nth-child(even){background:#fff;}
+
+  .eyebrow{color:var(--red); font-weight:800; font-size:13px; letter-spacing:1.5px; margin-bottom:10px; text-transform:uppercase;}
+  h1{font-size:clamp(30px,5vw,48px); font-weight:800; line-height:1.15; color:#fff; margin-bottom:18px;}
+  h1 .accent{color:var(--gold);}
+  h2{font-size:clamp(24px,3.5vw,34px); font-weight:800; color:var(--navy); margin-bottom:16px; text-align:center;}
+  .section-sub{text-align:center; color:#5a6b80; font-size:16px; max-width:640px; margin:0 auto 40px;}
+
+  header{
+    position:relative; color:#fff; padding:80px 0 64px; overflow:hidden; text-align:center;
+    background:linear-gradient(100deg, rgba(10,27,44,0.97) 0%, rgba(16,42,67,0.91) 45%, rgba(22,58,89,0.78) 100%), url('images/hospital_interior.jpg');
+    background-size:cover; background-position:center 20%;
+  }
+  header img.logo{width:120px; height:120px; margin:0 auto 24px;}
+  header .eyebrow{color:var(--gold);}
+  header p.desc{color:#cdd6e3; font-size:18px; max-width:620px; margin:0 auto; line-height:1.6;}
+
+  .stat-row{display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:40px;}
+  .stat{background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15); border-radius:12px; padding:20px; text-align:center;}
+  .stat .num{font-size:30px; font-weight:800; color:var(--gold);}
+  .stat .label{font-size:13px; color:#cdd6e3; margin-top:4px;}
+
+  .why-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:24px; margin-top:20px;}
+  .why-card{background:var(--cream); border-radius:14px; padding:28px;}
+  .why-card .ico{width:44px; height:44px; border-radius:10px; background:var(--navy); color:var(--gold); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:20px; margin-bottom:16px;}
+  .why-card h3{font-size:18px; font-weight:800; color:var(--navy); margin-bottom:8px;}
+  .why-card p{font-size:15px; color:#45586c; line-height:1.6;}
+
+  .instructor-card{display:grid; grid-template-columns:200px 1fr; gap:32px; align-items:center; background:var(--navy); color:#fff; border-radius:16px; padding:36px; margin-top:20px;}
+  .instructor-photo{width:160px; height:160px; border-radius:50%; object-fit:cover; border:4px solid var(--gold); margin:0 auto;}
+  .instructor-card h3{font-size:22px; font-weight:800; margin-bottom:6px;}
+  .instructor-card .role{color:var(--gold); font-weight:700; font-size:14px; margin-bottom:14px;}
+  .instructor-card p{color:#cdd6e3; line-height:1.7; font-size:15px;}
+
+  .modules-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:20px;}
+  .module{background:var(--cream); border-radius:10px; padding:18px; border-left:4px solid var(--red);}
+  .module .num{font-size:12px; font-weight:800; color:var(--red); letter-spacing:0.5px;}
+  .module .name{font-size:15px; font-weight:700; color:var(--navy); margin-top:4px;}
+
+  .tiers{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:20px;}
+  .tier{background:#fff; border:1.5px solid var(--tan); border-radius:14px; padding:24px 20px;}
+  .tier.featured{border-color:var(--red); box-shadow:0 8px 24px rgba(16,42,67,0.12);}
+  .tier .name{font-weight:800; color:var(--navy); font-size:15px; margin-bottom:4px;}
+  .tier .for{font-size:13px; color:#5a6b80; margin-bottom:14px;}
+  .tier ul{list-style:none; display:grid; gap:8px;}
+  .tier li{font-size:13px; color:var(--ink); padding-left:18px; position:relative; line-height:1.5;}
+  .tier li::before{content:"✓"; position:absolute; left:0; color:var(--red); font-weight:800;}
+
+  .cta-section{background:linear-gradient(110deg,var(--navy),var(--navy2)); text-align:center; color:#fff;}
+  .cta-section h2{color:#fff;}
+  .cta-section p{color:#cdd6e3; max-width:560px; margin:0 auto 28px; font-size:16px; line-height:1.6;}
+  .btn{display:inline-block; padding:16px 32px; border-radius:8px; font-weight:800; font-size:16px; background:var(--red); color:#fff;}
+
+  footer{background:var(--navy); color:#9fb3c8; text-align:center; font-size:13px; padding:24px 0;}
+
+  @media (max-width:760px){
+    .why-grid, .modules-grid, .tiers{grid-template-columns:1fr;}
+    .instructor-card{grid-template-columns:1fr; text-align:center;}
+    .stat-row{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<div class="stripes"></div>
+
+<header>
+  <div class="wrap">
+    <img class="logo" src="logo.png" alt="Seguridad y Safety Hospitalaria">
+    <div class="eyebrow">PROGRAMA INSTITUCIONAL · 100% EN ESPAÑOL</div>
+    <h1>Seguridad y <span class="accent">Safety</span> Hospitalaria</h1>
+    <p class="desc">Protocolos reales usados en hospitales de Estados Unidos, adaptados a la realidad de hospitales, clínicas y empresas de seguridad de Latinoamérica.</p>
+
+    <div class="stat-row">
+      <div class="stat"><div class="num">9</div><div class="label">semanas</div></div>
+      <div class="stat"><div class="num">18</div><div class="label">clases en vivo</div></div>
+      <div class="stat"><div class="num">100%</div><div class="label">en español</div></div>
+      <div class="stat"><div class="num">✓</div><div class="label">certificado</div></div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow" style="text-align:center;">POR QUÉ ESTE PROGRAMA</div>
+    <h2>No es un curso genérico de seguridad comercial</h2>
+    <p class="section-sub">Está diseñado específicamente para la realidad de hospitales y clínicas — no para oficinas o centros comerciales.</p>
+
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="ico">1</div>
+        <h3>Protocolos reales, no teoría genérica</h3>
+        <p>Los protocolos enseñados son los mismos usados en hospitales acreditados de Estados Unidos, adaptados a la realidad de instituciones en Latinoamérica.</p>
+      </div>
+      <div class="why-card">
+        <div class="ico">2</div>
+        <h3>Instructor con doble autoridad</h3>
+        <p>Combina gestión de seguridad física dentro de un hospital de EE.UU. con experiencia real como fuerza del orden — una perspectiva poco común.</p>
+      </div>
+      <div class="why-card">
+        <div class="ico">3</div>
+        <h3>En vivo, con casos prácticos</h3>
+        <p>No es contenido pre-grabado. Las clases incluyen ejercicios prácticos, casos reales y espacio para preguntas directas al instructor.</p>
+      </div>
+      <div class="why-card">
+        <div class="ico">4</div>
+        <h3>Flexible para su equipo</h3>
+        <p>Cada clase queda grabada, así que si alguien del equipo no puede asistir en vivo, puede verla después sin perderse nada.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow" style="text-align:center;">INSTRUCTOR</div>
+    <h2>Israel Peña</h2>
+
+    <div class="instructor-card">
+      <img class="instructor-photo" src="images/security_detail.jpg" alt="Israel Peña">
+      <div>
+        <h3>Israel Peña</h3>
+        <div class="role">Physical Security &amp; Safety Manager · Sheriff's Deputy en Estados Unidos</div>
+        <p>Gestiona la seguridad física de un sistema hospitalario en Estados Unidos, y además es Oficial Adjunto del Sheriff. Esta combinación poco común le permite cubrir tanto el protocolo interno del hospital como la coordinación real con fuerzas del orden — algo que ningún instructor de seguridad comercial puede ofrecer.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow" style="text-align:center;">TEMARIO</div>
+    <h2>9 semanas de contenido estructurado</h2>
+    <p class="section-sub">Cada semana cubre un área específica de seguridad hospitalaria, de lo fundamental a lo más avanzado.</p>
+
+    <div class="modules-grid">
+      <div class="module"><div class="num">SEMANA 1</div><div class="name">Fundamentos de seguridad hospitalaria</div></div>
+      <div class="module"><div class="num">SEMANA 2</div><div class="name">Evaluación de riesgos</div></div>
+      <div class="module"><div class="num">SEMANA 3</div><div class="name">Control de acceso</div></div>
+      <div class="module"><div class="num">SEMANA 4</div><div class="name">Violencia laboral y desescalada</div></div>
+      <div class="module"><div class="num">SEMANA 5</div><div class="name">Códigos de emergencia</div></div>
+      <div class="module"><div class="num">SEMANA 6</div><div class="name">Seguridad infantil</div></div>
+      <div class="module"><div class="num">SEMANA 7</div><div class="name">Fuerzas del orden y salud conductual</div></div>
+      <div class="module"><div class="num">SEMANA 8</div><div class="name">Fuga, contrabando, VIP y huelgas</div></div>
+      <div class="module"><div class="num">SEMANA 9</div><div class="name">Cultura de safety y certificación</div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow" style="text-align:center;">PAQUETES INSTITUCIONALES</div>
+    <h2>Un paquete según el tamaño de su equipo</h2>
+    <p class="section-sub">Cotización por institución, no por persona. Se personaliza según la cantidad de participantes.</p>
+
+    <div class="tiers">
+      <div class="tier">
+        <div class="name">CLÍNICA</div>
+        <div class="for">Hasta 10 participantes</div>
+        <ul>
+          <li>Programa completo: 9 semanas, 18 clases en vivo</li>
+          <li>Grabaciones y comunidad privada</li>
+          <li>Certificado para cada participante</li>
+        </ul>
+      </div>
+      <div class="tier featured">
+        <div class="name">HOSPITAL · MÁS SOLICITADO</div>
+        <div class="for">Hasta 25 participantes</div>
+        <ul>
+          <li>Todo lo del paquete Clínica</li>
+          <li>Sesión de diagnóstico de riesgos con la dirección</li>
+          <li>Reporte de asistencia y avance por participante</li>
+        </ul>
+      </div>
+      <div class="tier">
+        <div class="name">RED HOSPITALARIA</div>
+        <div class="for">Hasta 50 participantes · varias sedes</div>
+        <ul>
+          <li>Todo lo del paquete Hospital</li>
+          <li>Asesoría 1:1 con Israel para la dirección de seguridad</li>
+          <li>Casos prácticos adaptados a su institución</li>
+        </ul>
+      </div>
+      <div class="tier">
+        <div class="name">EMPRESA DE SEGURIDAD</div>
+        <div class="for">Personal propio, cualquier cantidad</div>
+        <ul>
+          <li>Programa completo: 9 semanas, 18 clases en vivo</li>
+          <li>Certificado por oficial, listo para licitaciones</li>
+          <li>Cotización según cuántos hospitales cliente atienda</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="wrap">
+    <h2>¿Listo para capacitar a su equipo?</h2>
+    <p>Hablemos sobre las necesidades específicas de su institución y preparemos una propuesta a la medida.</p>
+    <a class="btn" href="https://wa.me/12013172879" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+  </div>
+</section>
+
+<footer>
+  SEGURIDAD Y SAFETY HOSPITALARIA · PROGRAMA INSTITUCIONAL PARA HOSPITALES Y CLÍNICAS DE LATINOAMÉRICA
+</footer>
+
+</body>
+</html>
